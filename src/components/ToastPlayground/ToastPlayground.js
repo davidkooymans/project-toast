@@ -51,7 +51,7 @@ function ToastPlayground() {
                     name="variant"
                     value={item}
                     selected={toastType === item}
-                    onClick={() => setToastType(item)}
+                    onChange={() => setToastType(item)}
                   />
                   {item}
                 </label>
