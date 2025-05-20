@@ -3,12 +3,14 @@ import React from "react";
 import Button from "../Button";
 
 import styles from "./ToastPlayground.module.css";
+import Toast from "../Toast";
 
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastPlayground() {
   const [message, setMessage] = React.useState("");
   const [toastType, setToastType] = React.useState(VARIANT_OPTIONS[0]);
+  const [toastVisible, setToastVisible] = React.useState(false);
 
   return (
     <div className={styles.wrapper}>
@@ -17,6 +19,15 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
+      {toastVisible && (
+        <Toast
+          message={message}
+          type={toastType}
+          dismissHandler={() => {
+            setToastVisible(false);
+          }}
+        ></Toast>
+      )}
       <div className={styles.controlsWrapper}>
         <div className={styles.row}>
           <label
@@ -51,7 +62,7 @@ function ToastPlayground() {
                     name="variant"
                     value={item}
                     selected={toastType === item}
-                    onChange={() => setToastType(item)}
+                    onChange={(event) => setToastType(event.target.value)}
                   />
                   {item}
                 </label>
@@ -66,7 +77,8 @@ function ToastPlayground() {
             <Button
               onClick={(event) => {
                 event.preventDefault();
-                console.log(`${toastType} ${message}`)
+                console.log(`${toastType} ${message}`);
+                setToastVisible(true);
               }}
             >
               Pop Toast!

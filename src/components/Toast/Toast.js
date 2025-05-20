@@ -18,16 +18,19 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast() {
+function Toast({message, type, dismissHandler}) {
+
+  const IconTag = (ICONS_BY_VARIANT[type]?ICONS_BY_VARIANT[type]:'Info');
+  console.log(IconTag)
   return (
-    <div className={`${styles.toast} ${styles.notice}`}>
+    <div className={`${styles.toast} ${styles[type]}`}>
       <div className={styles.iconContainer}>
-        <Info size={24} />
+        <IconTag size={24} />
       </div>
       <p className={styles.content}>
-        16 photos have been uploaded
+        {message}
       </p>
-      <button className={styles.closeButton}>
+      <button className={styles.closeButton} onClick={(event) => dismissHandler()}>
         <X size={24} />
         <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
