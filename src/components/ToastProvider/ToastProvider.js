@@ -1,23 +1,19 @@
 import React from "react";
 
+import useEscape from "../../hooks/EscapeHook";
+
 export const ToastContext = React.createContext();
 
 function ToastProvider({ children }) {
-  React.useEffect(() => {
-    function escapeListener(event) {
-      if (event.key === 'Escape' ) {
-        setToasts([])
-      }
-    }
+  const [toasts, setToasts] = React.useState([]);
 
-    window.addEventListener("keydown", escapeListener);
-
-    return () => {
-      window.removeEventListener("keydown", escapeListener);
-    };
+  const clearToasts = React.useCallback(() => {
+    setToasts([]);
   }, []);
 
-  const [toasts, setToasts] = React.useState([]);
+  const [addEscapeListener] = useEscape();
+
+  addEscapeListener("clearToasts", ()=>{clearToasts()});
 
   function addToast(toastType, message) {
     const newToasts = [...toasts];
@@ -31,7 +27,7 @@ function ToastProvider({ children }) {
   }
 
   function removeToast(toast) {
-    const newToasts = toasts.filter((testToast) => toast.id != testToast.id);
+    const newToasts = toasts.filter((testToast) => toast.id !== testToast.id);
     setToasts(newToasts);
   }
 
