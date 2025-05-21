@@ -28,7 +28,7 @@ function useEscape() {
     return () => {
       window.removeEventListener("keydown", escapeListener);
     };
-  }, []);
+  });
 
   return [addCallback, removeCallback];
 }
