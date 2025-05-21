@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 import {
   AlertOctagon,
   AlertTriangle,
   CheckCircle,
   Info,
   X,
-} from 'react-feather';
+} from "react-feather";
 
-import VisuallyHidden from '../VisuallyHidden';
+import VisuallyHidden from "../VisuallyHidden";
 
-import styles from './Toast.module.css';
+import styles from "./Toast.module.css";
 
 const ICONS_BY_VARIANT = {
   notice: Info,
@@ -18,20 +18,24 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({message, type, dismissHandler}) {
-
-  const IconTag = (ICONS_BY_VARIANT[type]?ICONS_BY_VARIANT[type]:'Info');
+function Toast({ message, type, dismissHandler }) {
+  const IconTag = ICONS_BY_VARIANT[type] ? ICONS_BY_VARIANT[type] : "Info";
   return (
     <div className={`${styles.toast} ${styles[type]}`}>
       <div className={styles.iconContainer}>
         <IconTag size={24} />
       </div>
       <p className={styles.content}>
+        <VisuallyHidden>{type} -</VisuallyHidden>
         {message}
       </p>
-      <button className={styles.closeButton} onClick={(event) => dismissHandler()}>
+      <button
+        className={styles.closeButton}
+        onClick={(event) => dismissHandler()}
+        aria-label="Dismiss message"
+        aria-live="off"
+      >
         <X size={24} />
-        <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
     </div>
   );
